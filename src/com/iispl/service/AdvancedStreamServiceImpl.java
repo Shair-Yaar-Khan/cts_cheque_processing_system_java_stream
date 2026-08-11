@@ -16,38 +16,109 @@ public class AdvancedStreamServiceImpl implements AdvancedStreamService {
 	@Override
 	public void displayUniqueBranchMicrValues() {
 		
+		List<Cheque> cheques = chequeDao.getAllCheques();
+		
+		List<String> uniqueBranchCodes = cheques
+				.stream()
+				.map(Cheque::getBranchCode)
+				.distinct()
+				.collect(Collectors.toList());
+		
+		long count = cheques
+				.stream()
+				.map(Cheque::getMicrCode)
+				.distinct()
+				.count();
+		
+		List<String> uniqueMicrCodes = cheques
+				.stream()
+				.map(Cheque::getMicrCode)
+				.distinct()
+				.collect(Collectors.toList());
+		
+		System.out.println("===== UNIQUE CTS VALUES =====");
 
+		System.out.println("Branches: " + uniqueBranchCodes);
+		System.out.println("MICR Count: " + count);
+		System.out.println("MICR Codes: " + uniqueMicrCodes);
 	}
 
 	@Override
 	public void displayTopFiveProcessingQueue() {
 		
-
+		List<Cheque> cheques = chequeDao.getAllCheques();
+		
+		List<Cheque> top5 = cheques
+				.stream()
+				.sorted(Comparator.comparing(Cheque::getAmount).reversed())
+				.limit(5)
+				.collect(Collectors.toList());
+		
+		System.out.println("===== TOP 5 CTS PROCESSING QUEUE =====");
+		top5.forEach(cheque -> System.out.println(cheque.getChequeNumber()
+				+ " | " + cheque.getBranchCode() 
+				+ " | " + cheque.getAmount()));
 	}
 
 	@Override
 	public void displayPaginatedCheques(int pageNumber, int pageSize) {
 		
-
+		List<Cheque> cheques = chequeDao.getAllCheques();
+		
+		List<String> page = cheques
+				.stream()
+				.map(Cheque::getChequeNumber)
+				.skip((pageNumber - 1) * pageSize)
+				.limit(pageSize)
+				.collect(Collectors.toList());
+		
+		System.out.println("Page Number: " + pageNumber);
+		System.out.println("Page Size: " + pageSize);
+		
+		System.out.println("===== CHEQUE PAGE " + pageNumber + " =====");
+		
+		page.forEach(System.out::println);
 	}
 
 	@Override
 	public void displayRecordCount() {
-		
-		
-
+		List<Cheque>cheques = chequeDao.getAllCheques();
+		long count = cheques.stream()
+				.count();
+		System.out.println("========CTS RECORD COUNT========");
+		System.out.println("Total Cheque records:" + count);
 	}
 
 	@Override
 	public void displayHighestLowestCheque() {
-		
+		List<Cheque>cheques = chequeDao.getAllCheques();
+		Cheque highest = cheques.stream()
+		        .max(Comparator.comparing(Cheque::getAmount))
+		        .get();
+		Cheque lowest = cheques.stream()
+	            .min(Comparator.comparing(Cheque::getAmount))
+	            .get();
+		System.out.println("Highest : " + highest.getChequeNumber() + " | " + highest.getAmount());
 
+	    System.out.println("Lowest : " + lowest.getChequeNumber() + " | " + lowest.getAmount());
 	}
 
 	@Override
 	public void displayAverageChequeAmount() {
-		
+		List<Cheque> cheques = chequeDao.getAllCheques();
 
+	    OptionalDouble average = cheques.stream()
+	            .mapToDouble(Cheque::getAmount)
+	            .average();
+
+	    System.out.println("===== AVERAGE CHEQUE AMOUNT =====");
+
+	    if (average.isPresent()) {
+	        System.out.printf("Average Amount : %.2f%n",
+	                average.getAsDouble());
+	    } else {
+	        System.out.println("Average Amount : No records available");
+	    }
 	}
 
 	@Override
