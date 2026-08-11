@@ -76,8 +76,16 @@ public class AdvancedStreamServiceImpl implements AdvancedStreamService {
 
 	@Override
 	public void displayHighestLowestCheque() {
-		
+		List<Cheque>cheques = chequeDao.getAllCheques();
+		Cheque highest = cheques.stream()
+		        .max(Comparator.comparing(Cheque::getAmount))
+		        .get();
+		Cheque lowest = cheques.stream()
+	            .min(Comparator.comparing(Cheque::getAmount))
+	            .get();
+		System.out.println("Highest : " + highest.getChequeNumber() + " | " + highest.getAmount());
 
+	    System.out.println("Lowest : " + lowest.getChequeNumber() + " | " + lowest.getAmount());
 	}
 
 	@Override
