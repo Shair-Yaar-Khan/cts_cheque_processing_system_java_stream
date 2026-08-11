@@ -67,9 +67,11 @@ public class AdvancedStreamServiceImpl implements AdvancedStreamService {
 
 	@Override
 	public void displayRecordCount() {
-		
-		
-
+		List<Cheque>cheques = chequeDao.getAllCheques();
+		long count = cheques.stream()
+				.count();
+		System.out.println("========CTS RECORD COUNT========");
+		System.out.println("Total Cheque records:" + count);
 	}
 
 	@Override
