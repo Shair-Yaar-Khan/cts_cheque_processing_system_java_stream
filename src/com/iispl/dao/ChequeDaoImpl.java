@@ -121,7 +121,7 @@ public class ChequeDaoImpl implements ChequeDao {
 
 	@Override
 	public void updateValidationStatus(String chequeNumber, ValidationStatus status) {
-		String sql = "- 6. Update validation status UPDATE CTS_CHEQUE SET validation_status = ? WHERE cheque_number = ?;";
+		String sql = "UPDATE CTS_CHEQUE SET validation_status = ? WHERE cheque_number = ?;";
 		
 	       try (Connection connection = DBUtil.getConnection();
 					
