@@ -1,6 +1,11 @@
 package com.iispl.service;
 
+import com.iispl.dao.ChequeDao;
+import com.iispl.dao.ChequeDaoImpl;
+
 public class AdvancedStreamServiceImpl implements AdvancedStreamService {
+	
+	ChequeDao chequeDao = new ChequeDaoImpl();
 
 	@Override
 	public void displayUniqueBranchMicrValues() {
@@ -22,6 +27,7 @@ public class AdvancedStreamServiceImpl implements AdvancedStreamService {
 
 	@Override
 	public void displayRecordCount() {
+		
 		
 
 	}
