@@ -12,6 +12,5 @@ import com.iispl.service.AdvancedStreamServiceImpl;
 public class CTSApplication {
 public static void main(String[] args) {
 	
-	new AdvancedStreamServiceImpl().displayTopFiveProcessingQueue();
 }
 }
