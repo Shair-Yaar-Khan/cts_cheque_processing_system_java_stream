@@ -2,6 +2,7 @@ package com.iispl.service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 import com.iispl.dao.ChequeDao;
@@ -104,8 +105,20 @@ public class AdvancedStreamServiceImpl implements AdvancedStreamService {
 
 	@Override
 	public void displayAverageChequeAmount() {
-		
+		List<Cheque> cheques = chequeDao.getAllCheques();
 
+	    OptionalDouble average = cheques.stream()
+	            .mapToDouble(Cheque::getAmount)
+	            .average();
+
+	    System.out.println("===== AVERAGE CHEQUE AMOUNT =====");
+
+	    if (average.isPresent()) {
+	        System.out.printf("Average Amount : %.2f%n",
+	                average.getAsDouble());
+	    } else {
+	        System.out.println("Average Amount : No records available");
+	    }
 	}
 
 	@Override
