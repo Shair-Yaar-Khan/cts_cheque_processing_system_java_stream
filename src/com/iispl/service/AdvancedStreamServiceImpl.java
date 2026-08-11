@@ -62,7 +62,21 @@ public class AdvancedStreamServiceImpl implements AdvancedStreamService {
 	@Override
 	public void displayPaginatedCheques(int pageNumber, int pageSize) {
 		
-
+		List<Cheque> cheques = chequeDao.getAllCheques();
+		
+		List<String> page = cheques
+				.stream()
+				.map(Cheque::getChequeNumber)
+				.skip((pageNumber - 1) * pageSize)
+				.limit(pageSize)
+				.collect(Collectors.toList());
+		
+		System.out.println("Page Number: " + pageNumber);
+		System.out.println("Page Size: " + pageSize);
+		
+		System.out.println("===== CHEQUE PAGE " + pageNumber + " =====");
+		
+		page.forEach(System.out::println);
 	}
 
 	@Override
