@@ -285,7 +285,7 @@ public class AdvancedStreamServiceImpl implements AdvancedStreamService {
 	                    c.getChequeNumber() +
 	                    " entered pipeline"))
 	    		.filter(c -> c.getAmount() >= 50000)
-	            .peek(c -> System.out.println("Passed: "+c.getChequeNumber()))
+	            
 	            .toList();
 
 	    System.out.println("Final result produced successfully.");
