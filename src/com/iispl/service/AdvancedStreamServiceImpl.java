@@ -130,20 +130,30 @@ public class AdvancedStreamServiceImpl implements AdvancedStreamService {
 	@Override
 	public void displayChequeLookupMap() {
 		
-		Scanner scanner=new Scanner(System.in);
-		List<Cheque> chequeList=chequeDao.getAllCheques();
-		System.out.println("Enter Cheque Number");
-		String chequeNumber=scanner.next();
-		Map<String,Cheque> chequeMap=chequeList.stream().filter(cheque->cheque.getChequeNumber().equals(chequeNumber))
-			.collect(Collectors.toMap(cheque->cheque.getChequeNumber(),cheque->cheque));
-		
-		System.out.println("===== CHEQUE LOOKUP =====");
-		Cheque cheque = chequeMap.get(chequeNumber);
-		System.out.println("Key : " + cheque.getChequeNumber());
-		System.out.println("Customer : " + cheque.getCustomerName());
-		System.out.println("Amount : " + cheque.getAmount());
-		System.out.println("Branch : " + cheque.getBranchCode());
+		    Scanner scanner = new Scanner(System.in);
 
+		    List<Cheque> chequeList = chequeDao.getAllCheques();
+
+		    Map<String, Cheque> chequeMap = chequeList.stream()
+		            .collect(Collectors.toMap(Cheque::getChequeNumber,
+		                    cheque -> cheque,
+		                    (existing, duplicate) -> existing));
+
+		    System.out.println("Enter Cheque Number");
+		    String chequeNumber = scanner.next();
+
+		    System.out.println("===== CHEQUE LOOKUP =====");
+		    Cheque cheque = chequeMap.get(chequeNumber);
+
+		    if (cheque != null) {
+		        System.out.println("Key : " + cheque.getChequeNumber());
+		        System.out.println("Customer : " + cheque.getCustomerName());
+		        System.out.println("Amount : " + cheque.getAmount());
+		        System.out.println("Branch : " + cheque.getBranchCode());
+		    } else {
+		        System.out.println("Cheque not found");
+		    }
+		
 	}
 
 	@Override
