@@ -203,7 +203,7 @@ public class AdvancedStreamServiceImpl implements AdvancedStreamService {
 		
 		for(String branch : totalPerBranch.keySet()) {
 			
-			 System.out.printf("%s | Total: %10.2f | Average: %.2f%n",branch,totalPerBranch.get(branch),averagePerBranch.get(branch));
+			 System.out.printf("%s | Total: %-10.2f | Average: %.2f%n",branch,totalPerBranch.get(branch),averagePerBranch.get(branch));
 		}
 
 	}
